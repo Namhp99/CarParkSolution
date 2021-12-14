@@ -17,4 +17,16 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BookingOffices\" />
+    <Folder Include="Cars\" />
+    <Folder Include="Tickets\" />
+    <Folder Include="Trips\" />
+    <Folder Include="Parkinglots\" />
+  </ItemGroup>
+
 </Project>

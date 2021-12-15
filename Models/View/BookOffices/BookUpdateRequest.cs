@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Entities
+namespace Models.View.BookOffices
 {
-    public class BookingOffice
+    public class BookUpdateRequest
     {
-        public int OfficeId { get; set; }
+        public string OfficeId { get; set; }
         public DateTime EndContractDeadline { get; set; }
         public DateTime StartContractDeadline { get; set; }
         public string OfficeName { get; set; }
@@ -14,6 +14,5 @@ namespace Models.Entities
         public string OfficePlace { get; set; }
         public int OfficePrice { get; set; }
         public int TripId { get; set; }
-        public Trip Trip { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Models.EF;
+using Services.BookingOffices;
 using Services.Employees;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace WebAPI
         {
             services.AddDbContext<CarParkDbContext>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IBookOfficeService, BookOfficeService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

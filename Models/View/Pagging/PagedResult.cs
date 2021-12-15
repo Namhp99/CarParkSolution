@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.View.Employees
+namespace Models.View.Pagging
 {
     public class PagedResult<T>
     {

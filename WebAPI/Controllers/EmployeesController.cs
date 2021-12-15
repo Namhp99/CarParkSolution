@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.View.Employees;
+using Models.View.Pagging;
 using Services.Employees;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpGet("/GetEmployee/{Id}")]
-        public async Task<IActionResult> GetAllEmployee(int Id)
+        public async Task<IActionResult> GetEmployeeById(int Id)
         {
             var result = await _employeeService.GetById(Id);
             if (result == null)
@@ -82,7 +83,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpPost("/GetEmployeePagging")]
-        public async Task<IActionResult> GetEmployeePagging([FromForm] GetEmployeePaggingRequest request)
+        public async Task<IActionResult> GetEmployeePagging([FromForm] GetPaggingRequest request)
         {
             var result = await _employeeService.GetEmployeePaging(request);
             //if (result == null)

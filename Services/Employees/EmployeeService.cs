@@ -2,6 +2,7 @@
 using Models.EF;
 using Models.Entities;
 using Models.View.Employees;
+using Models.View.Pagging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +83,7 @@ namespace Services.Employees
             return viewEmp;
         }
 
-        public async Task<PagedResult<EmployeeView>> GetEmployeeByAddress(GetEmployeePaggingRequest request)
+        public async Task<PagedResult<EmployeeView>> GetEmployeeByAddress(GetPaggingRequest request)
         {
             //1/Select join
             var query = from p in _context.Employees
@@ -116,7 +117,7 @@ namespace Services.Employees
             return pagedResult;
         }
 
-        public async Task<PagedResult<EmployeeView>> GetEmployeeByDepartment(GetEmployeePaggingRequest request)
+        public async Task<PagedResult<EmployeeView>> GetEmployeeByDepartment(GetPaggingRequest request)
         {
             //1/Select join
             var query = from p in _context.Employees
@@ -150,7 +151,7 @@ namespace Services.Employees
             return pagedResult;
         }
 
-        public async Task<PagedResult<EmployeeView>> GetEmployeeByEmail(GetEmployeePaggingRequest request)
+        public async Task<PagedResult<EmployeeView>> GetEmployeeByEmail(GetPaggingRequest request)
         {
             //1/Select join
             var query = from p in _context.Employees
@@ -184,7 +185,7 @@ namespace Services.Employees
             return pagedResult;
         }
 
-        public async Task<PagedResult<EmployeeView>> GetEmployeeByPhone(GetEmployeePaggingRequest request)
+        public async Task<PagedResult<EmployeeView>> GetEmployeeByPhone(GetPaggingRequest request)
         {
             //1/Select join
             var query = from p in _context.Employees
@@ -218,7 +219,7 @@ namespace Services.Employees
             return pagedResult;
         }
 
-        public async Task<PagedResult<EmployeeView>> GetEmployeePaging(GetEmployeePaggingRequest request)
+        public async Task<PagedResult<EmployeeView>> GetEmployeePaging(GetPaggingRequest request)
         {
             //1/Select join
             var query = from p in _context.Employees
@@ -232,7 +233,7 @@ namespace Services.Employees
                                  || x.p.Department.Contains(request.Keyword)
                                  || x.p.Sex.Contains(request.Keyword));     
             //3.Paging
-            int tatalRow = await query.CountAsync();
+            int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .Select(i => new EmployeeView()
@@ -251,7 +252,7 @@ namespace Services.Employees
             //4. Select and projection
             var pagedResult = new PagedResult<EmployeeView>()
             {
-                TotalRecord = tatalRow,
+                TotalRecord = totalRow,
                 Items = data
             };
             return pagedResult;

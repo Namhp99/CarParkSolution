@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         {
             _bookOfficeService = bookOfficeService;
         }
-        [HttpPost]
+        [HttpPost("/AddBookOffice")]
         public async Task<IActionResult> CreateBookOffice([FromForm] BookCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("/UpdateBookOffice")]
         public async Task<IActionResult> UpdateBookOffice([FromForm] BookUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("/DelBookOffice")]
         public async Task<IActionResult> DeleteBookOffice(int Id)
         {
             if (!ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpGet]
+        [HttpGet("/GetAllOffice")]
         public async Task<IActionResult> GetAllOffice()
         {
             if (!ModelState.IsValid)
@@ -73,9 +73,9 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
-        [HttpGet("/GetOffice/{Id}")]
+        [HttpGet("/GetOfficeInfo")]
         public async Task<IActionResult> GetOfficeById(int Id)
         {
             var result = await _bookOfficeService.GetById(Id);

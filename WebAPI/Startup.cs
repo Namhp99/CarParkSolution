@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Models.EF;
 using Services.BookingOffices;
 using Services.Employees;
+using Services.Trips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace WebAPI
             services.AddDbContext<CarParkDbContext>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IBookOfficeService, BookOfficeService>();
+            services.AddTransient<ITripService, TripService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

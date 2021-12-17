@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         {
             _employeeService = employeeService;
         }
-        [HttpPost]
+        [HttpPost("/AddEmployee")]
         public async Task<IActionResult> CreateEmployee([FromForm] EmployeeCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("/UpdateEmployee")]
         public async Task<IActionResult> UpdateEmployee([FromForm] EmployeeUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpDelete("{Id}")]
+        [HttpDelete("/DelEmployee")]
         public async Task<IActionResult> DeleteEmployee(int Id)
         {
             if (!ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpGet("/AllEmployee")]
+        [HttpGet("/GetAllEmployee")]
         public async Task<IActionResult> GetAllEmployee()
         {
 
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("/GetEmployee/{Id}")]
+        [HttpGet("/GetEmployeeInfo")]
         public async Task<IActionResult> GetEmployeeById(int Id)
         {
             var result = await _employeeService.GetById(Id);

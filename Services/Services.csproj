@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Cars\" />
     <Folder Include="Tickets\" />
-    <Folder Include="Trips\" />
     <Folder Include="Parkinglots\" />
   </ItemGroup>
 

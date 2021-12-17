@@ -21,7 +21,7 @@ namespace Services.BookingOffices
         public async Task<int> Create(BookCreateRequest request)
         {
             var trip = await _context.Trips.FindAsync(request.TripId);
-            if(trip == null) throw new Exception("Khong tim ton tai chuyen");
+            if(trip == null) throw new Exception("Khong ton tai chuyen");
             var bookOffice = new BookingOffice()
             {
                 OfficeName = request.OfficeName,

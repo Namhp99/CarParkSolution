@@ -6,6 +6,7 @@ namespace Models.View.BookOffices
 {
     public class BookView
     {
+        public int OfficeId { get; set; }
         public DateTime EndContractDeadline { get; set; }
         public DateTime StartContractDeadline { get; set; }
         public string OfficeName { get; set; }

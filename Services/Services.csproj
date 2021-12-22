@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="5.0.2" />
     <PackageReference Include="DevExpress.Xpo" Version="19.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.20">
@@ -20,11 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Cars\" />
-    <Folder Include="Tickets\" />
   </ItemGroup>
 
 </Project>

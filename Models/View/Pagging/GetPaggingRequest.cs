@@ -9,5 +9,6 @@ namespace Models.View.Pagging
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public string Keyword { get; set; }
+        public string KeyType { get; set; }
     }
 }

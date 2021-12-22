@@ -7,6 +7,8 @@ namespace Models.View.Employees
     public class EmployeeUpdateRequest
     {
         public int EmployeeId { get; set; }
+        public string Account { get; set; }
+        public string Password { get; set; }
         public string Department { get; set; }
         public string EmployeeAddress { get; set; }
         public DateTime EmployeeBirthdate { get; set; }

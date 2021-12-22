@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.Entities;
+using Models.View.Pagging;
 using Models.View.Parkinglots;
-using Services.Parkinglots;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,8 @@ namespace WebAPI.Controllers
         {
             _parkinglotService = parkinglotService;
         }
-        [HttpPost("/AddParkinglot")]
-        public async Task<IActionResult> CreateParkinglot([FromForm] ParkinglotCreateRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromForm] ParkinglotCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -32,8 +34,8 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpPut("/UpdateParkinglot")]
-        public async Task<IActionResult> UpdateParkinglot([FromForm] ParkinglotUpdateRequest request)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromForm] ParkinglotUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -46,8 +48,8 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpDelete("/DelParkinglot")]
-        public async Task<IActionResult> DeleteParkinglot(int Id)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(int Id)
         {
             if (!ModelState.IsValid)
             {
@@ -60,35 +62,55 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        [HttpGet("/GetAllParkinglot")]
-        public async Task<IActionResult> GetAllParkinglot()
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             var result = await _parkinglotService.GetAll();
-            //if (result.Count == 0)
-            //{
-            //    return BadRequest();
-            //}
+            if (result == null)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
-        [HttpGet("/GetParkinglotInfo")]
-        public async Task<IActionResult> GetParkinglotById(int Id)
+        [HttpPost("GetInfo")]
+        public async Task<IActionResult> GetById(int Id)
         {
             var result = await _parkinglotService.GetById(Id);
             if (result == null)
             {
-                return BadRequest("Khong tim thay bai dau xe");
+                return BadRequest();
             }
             return Ok(result);
         }
-        //[HttpPost("/GetTripPagging")]
-        //public async Task<IActionResult> GetEmployeePagging([FromForm] GetPaggingRequest request)
-        //{
-        //    var result = await _tripService.GetTripPagging(request);
-        //    //if (result == null)
-        //    //{
-        //    //    return BadRequest("Khong tim thay nhan vien");
-        //    //}
-        //    return Ok(result);
-        //}
+        [HttpPost("GetPagging")]
+        public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
+        {
+            var result = await _parkinglotService.GetPaging(request);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+        [HttpGet("GetAllRecords")]
+        public async Task<IActionResult> GetAllRecords()
+        {
+            var result = await _parkinglotService.GetAllRecords();
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+        [HttpPost("Find")]
+        public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
+        {
+            var result = await _parkinglotService.Find(request);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
     }
 }

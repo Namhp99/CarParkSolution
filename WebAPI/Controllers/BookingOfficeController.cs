@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
-using Models.View.Employees;
+using Models.View.BookOffices;
 using Models.View.Pagging;
 using Services.Interfaces;
 using System;
@@ -13,21 +13,21 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class BookingOfficeController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
-        public EmployeesController(IEmployeeService employeeService)
+        private readonly IBookingOfficeService _bookingOfficeService;
+        public BookingOfficeController(IBookingOfficeService bookingOfficeService)
         {
-            _employeeService = employeeService;
+            _bookingOfficeService = bookingOfficeService;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] EmployeeCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] BookCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _employeeService.Create(request);
+            var result = await _bookingOfficeService.Create(request);
             if (result == 0)
             {
                 return BadRequest();
@@ -35,13 +35,13 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] EmployeeUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] BookUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _employeeService.Update(request);
+            var result = await _bookingOfficeService.Update(request);
             if (result == 0)
             {
                 return BadRequest();
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _employeeService.Delete(Id);
+            var result = await _bookingOfficeService.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _employeeService.GetAll();
+            var result = await _bookingOfficeService.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _employeeService.GetById(Id);
+            var result = await _bookingOfficeService.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -85,7 +85,17 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _employeeService.GetPaging(request);
+            var result = await _bookingOfficeService.GetPaging(request);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+        [HttpGet("GetAllRecords")]
+        public async Task<IActionResult> GetAllRecords()
+        {
+            var result = await _bookingOfficeService.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -95,7 +105,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _employeeService.Find(request);
+            var result = await _bookingOfficeService.Find(request);
             if (result == null)
             {
                 return BadRequest();

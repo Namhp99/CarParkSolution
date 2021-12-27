@@ -11,8 +11,6 @@ namespace Services.Interfaces
 {
     public interface IBookingOfficeService : IGenericRespository<BookingOffice>
     {
-        Task<int> Create(BookCreateRequest request);
-        Task<int> Update(BookUpdateRequest request);
         Task<PagedResult<BookingOffice>> GetAllRecords();
         Task<PagedResult<BookingOffice>> Find(GetPaggingRequest request);
     }

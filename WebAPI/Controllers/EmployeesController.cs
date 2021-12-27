@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Authentication;
+using Models.DTO;
 using Models.Entities;
 using Models.View.Employees;
 using Models.View.Pagging;
@@ -19,18 +21,21 @@ namespace WebAPI.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
-        public EmployeesController(IEmployeeService employeeService)
+        private readonly IMapper _mapper;
+        public EmployeesController(IEmployeeService employeeService, IMapper mapper)
         {
             _employeeService = employeeService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] EmployeeCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] EmployeeDTO request)
         {
+            var employee = _mapper.Map<Employee>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _employeeService.Create(request);
+            var result = await _employeeService.Create(employee);
             if (result == 0)
             {
                 return BadRequest();
@@ -38,13 +43,14 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] EmployeeUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] EmployeeDTO request)
         {
+            var employee = _mapper.Map<Employee>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _employeeService.Update(request);
+            var result = await _employeeService.Update(employee);
             if (result == 0)
             {
                 return BadRequest();

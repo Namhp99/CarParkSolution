@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Tickets;
@@ -19,18 +21,21 @@ namespace WebAPI.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
-        public TicketController(ITicketService ticketService)
+        private readonly IMapper _mapper;
+        public TicketController(ITicketService ticketService, IMapper mapper)
         {
             _ticketService = ticketService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] TicketCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] TicketDTO request)
         {
+            var ticket = _mapper.Map<Ticket>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _ticketService.Create(request);
+            var result = await _ticketService.Create(ticket);
             if (result == 0)
             {
                 return BadRequest();
@@ -38,13 +43,15 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] TicketUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] TicketDTO request)
         {
+            var ticket = _mapper.Map<Ticket>(request);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _ticketService.Update(request);
+            var result = await _ticketService.Update(ticket);
             if (result == 0)
             {
                 return BadRequest();

@@ -22,18 +22,18 @@ namespace Services
         {
         }
 
-        public async Task<int> Create(TicketCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TicketCreateRequest, Ticket>();
-            });
-            var mapper = config.CreateMapper();
-            Ticket ticket = mapper.Map<Ticket>(request);
-            _context.Tickets.Add(ticket);
-            await _context.SaveChangesAsync();
-            return ticket.TripId;
-        }
+        //public async Task<int> Create(TicketCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<TicketCreateRequest, Ticket>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    Ticket ticket = mapper.Map<Ticket>(request);
+        //    _context.Tickets.Add(ticket);
+        //    await _context.SaveChangesAsync();
+        //    return ticket.TripId;
+        //}
 
         public async Task<PagedResult<Ticket>> Find(GetPaggingRequest request)
         {
@@ -134,15 +134,15 @@ namespace Services
             return pagedResult;
         }
 
-        public async Task<int> Update(TicketUpdateRequest request)
-        {
-            var ticket = await _context.Tickets.FindAsync(request.TicketId);
-            if (ticket == null) return -1;
-            ticket.BookingTime = request.BookingTime;
-            ticket.CustomerName = request.CustomerName;
-            ticket.LicensePlate = request.LicensePlate;
-            ticket.TripId = request.TripId;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(TicketUpdateRequest request)
+        //{
+        //    var ticket = await _context.Tickets.FindAsync(request.TicketId);
+        //    if (ticket == null) return -1;
+        //    ticket.BookingTime = request.BookingTime;
+        //    ticket.CustomerName = request.CustomerName;
+        //    ticket.LicensePlate = request.LicensePlate;
+        //    ticket.TripId = request.TripId;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

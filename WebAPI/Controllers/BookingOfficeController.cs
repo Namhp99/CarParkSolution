@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Entities;
 using Models.View.BookOffices;
 using Models.View.Pagging;
@@ -19,18 +21,23 @@ namespace WebAPI.Controllers
     public class BookingOfficeController : ControllerBase
     {
         private readonly IBookingOfficeService _bookingOfficeService;
-        public BookingOfficeController(IBookingOfficeService bookingOfficeService)
+        private readonly IMapper _mapper;
+
+        public BookingOfficeController(IBookingOfficeService bookingOfficeService, IMapper mapper)
         {
             _bookingOfficeService = bookingOfficeService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] BookCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] BookingOfficeDTO request)
         {
+            var bookingOffice = _mapper.Map<BookingOffice>(request);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _bookingOfficeService.Create(request);
+            var result = await _bookingOfficeService.Create(bookingOffice);
             if (result == 0)
             {
                 return BadRequest();
@@ -38,13 +45,14 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] BookUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] BookingOfficeDTO request)
         {
+            var bookingOffice = _mapper.Map<BookingOffice>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _bookingOfficeService.Update(request);
+            var result = await _bookingOfficeService.Update(bookingOffice);
             if (result == 0)
             {
                 return BadRequest();

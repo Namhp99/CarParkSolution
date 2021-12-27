@@ -22,18 +22,18 @@ namespace Services.Implement
         {
         }
 
-        public async Task<int> Create(BookCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<BookCreateRequest, BookingOffice>();
-            });
-            var mapper = config.CreateMapper();
-            BookingOffice bookingOffice = mapper.Map<BookingOffice>(request);
-            _context.BookingOffices.Add(bookingOffice);
-            await _context.SaveChangesAsync();
-            return bookingOffice.OfficeId;
-        }
+        //public async Task<int> Create(BookCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<BookCreateRequest, BookingOffice>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    BookingOffice bookingOffice = mapper.Map<BookingOffice>(request);
+        //    _context.BookingOffices.Add(bookingOffice);
+        //    await _context.SaveChangesAsync();
+        //    return bookingOffice.OfficeId;
+        //}
 
         public async Task<PagedResult<BookingOffice>> Find(GetPaggingRequest request)
         {
@@ -121,18 +121,18 @@ namespace Services.Implement
             return pagedResult;
         }
 
-        public async Task<int> Update(BookUpdateRequest request)
-        {
-            var booking = await _context.BookingOffices.FindAsync(request.OfficeId);
-            if (booking == null) return -1;
-            booking.EndContractDeadline = request.EndContractDeadline;
-            booking.OfficeName = request.OfficeName;
-            booking.OfficePhone = request.OfficePhone;
-            booking.OfficePlace = request.OfficePlace;
-            booking.OfficePrice = request.OfficePrice;
-            booking.StartContractDeadline = request.StartContractDeadline;
-            booking.TripId = request.TripId;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(BookUpdateRequest request)
+        //{
+        //    var booking = await _context.BookingOffices.FindAsync(request.OfficeId);
+        //    if (booking == null) return -1;
+        //    booking.EndContractDeadline = request.EndContractDeadline;
+        //    booking.OfficeName = request.OfficeName;
+        //    booking.OfficePhone = request.OfficePhone;
+        //    booking.OfficePlace = request.OfficePlace;
+        //    booking.OfficePrice = request.OfficePrice;
+        //    booking.StartContractDeadline = request.StartContractDeadline;
+        //    booking.TripId = request.TripId;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

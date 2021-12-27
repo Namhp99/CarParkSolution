@@ -22,18 +22,18 @@ namespace Services.Implement
         {
         }
 
-        public async Task<int> Create(ParkinglotCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<ParkinglotCreateRequest, Parkinglot>();
-            });
-            var mapper = config.CreateMapper();
-            Parkinglot parkinglot = mapper.Map<Parkinglot>(request);
-            _context.Parkinglots.Add(parkinglot);
-            await _context.SaveChangesAsync();
-            return parkinglot.ParkId;
-        }
+        //public async Task<int> Create(ParkinglotCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<ParkinglotCreateRequest, Parkinglot>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    Parkinglot parkinglot = mapper.Map<Parkinglot>(request);
+        //    _context.Parkinglots.Add(parkinglot);
+        //    await _context.SaveChangesAsync();
+        //    return parkinglot.ParkId;
+        //}
 
         public async Task<PagedResult<Parkinglot>> Find(GetPaggingRequest request)
         {
@@ -106,16 +106,16 @@ namespace Services.Implement
             return pagedResult;
         }
 
-        public async Task<int> Update(ParkinglotUpdateRequest request)
-        {
-            var parkinglot = await _context.Parkinglots.FindAsync(request.ParkId);
-            if (parkinglot == null) return -1;
-            parkinglot.ParkArea = request.ParkArea;
-            parkinglot.ParkName = request.ParkName;
-            parkinglot.ParkPlace = request.ParkPlace;
-            parkinglot.ParkPrice = request.ParkPrice;
-            parkinglot.ParkStatus = request.ParkStatus;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(ParkinglotUpdateRequest request)
+        //{
+        //    var parkinglot = await _context.Parkinglots.FindAsync(request.ParkId);
+        //    if (parkinglot == null) return -1;
+        //    parkinglot.ParkArea = request.ParkArea;
+        //    parkinglot.ParkName = request.ParkName;
+        //    parkinglot.ParkPlace = request.ParkPlace;
+        //    parkinglot.ParkPrice = request.ParkPrice;
+        //    parkinglot.ParkStatus = request.ParkStatus;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

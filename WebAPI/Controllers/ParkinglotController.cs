@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Parkinglots;
@@ -18,18 +20,21 @@ namespace WebAPI.Controllers
     public class ParkinglotController : ControllerBase
     {
         private readonly IParkinglotService _parkinglotService;
-        public ParkinglotController(IParkinglotService parkinglotService)
+        private readonly IMapper _mapper;
+        public ParkinglotController(IParkinglotService parkinglotService, IMapper mapper)
         {
             _parkinglotService = parkinglotService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] ParkinglotCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] ParkinglotDTO request)
         {
+            var parkinglot = _mapper.Map<Parkinglot>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _parkinglotService.Create(request);
+            var result = await _parkinglotService.Create(parkinglot);
             if (result == 0)
             {
                 return BadRequest();
@@ -37,13 +42,15 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] ParkinglotUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] ParkinglotDTO request)
         {
+            var parkinglot = _mapper.Map<Parkinglot>(request);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _parkinglotService.Update(request);
+            var result = await _parkinglotService.Update(parkinglot);
             if (result == 0)
             {
                 return BadRequest();

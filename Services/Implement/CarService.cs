@@ -22,17 +22,17 @@ namespace Services.Implement
         {
         }
 
-        public async Task<int> Create(CarCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<CarCreateRequest, Car>();
-            });
-            var mapper = config.CreateMapper();
-            Car car = mapper.Map<Car>(request);
-            _context.Cars.Add(car);
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Create(CarCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<CarCreateRequest, Car>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    Car car = mapper.Map<Car>(request);
+        //    _context.Cars.Add(car);
+        //    return await _context.SaveChangesAsync();
+        //}
         public async Task<Car> GetByCar(string request)
         {
             var car = await _context.Cars.FindAsync(request);
@@ -122,15 +122,15 @@ namespace Services.Implement
             return pagedResult;
         }
 
-        public async Task<int> Update(CarUpdateRequest request)
-        {
-            var car = await _context.Cars.FindAsync(request.LicensePlate);
-            if (car == null) return -1;
-            car.CarColor = request.CarColor;
-            car.CarType = request.CarType;
-            car.Company = request.Company;
-            car.ParkId = request.ParkId;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(CarUpdateRequest request)
+        //{
+        //    var car = await _context.Cars.FindAsync(request.LicensePlate);
+        //    if (car == null) return -1;
+        //    car.CarColor = request.CarColor;
+        //    car.CarType = request.CarType;
+        //    car.Company = request.Company;
+        //    car.ParkId = request.ParkId;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

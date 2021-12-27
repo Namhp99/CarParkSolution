@@ -33,6 +33,12 @@ namespace Services.Implement
             _context.Cars.Add(car);
             return await _context.SaveChangesAsync();
         }
+        public async Task<Car> GetByCar(string request)
+        {
+            var car = await _context.Cars.FindAsync(request);
+            if (car == null) return null;
+            return car;
+        }
 
         public async Task<PagedResult<Car>> Find(GetPaggingRequest request)
         {

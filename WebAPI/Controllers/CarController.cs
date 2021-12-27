@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using Models.View.Cars;
@@ -13,6 +14,8 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "HRM, Admin")]
+
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;
@@ -73,9 +76,9 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpPost("GetInfo")]
-        public async Task<IActionResult> GetById(int Id)
+        public async Task<IActionResult> GetByCar(string request)
         {
-            var result = await _carService.GetById(Id);
+            var result = await _carService.GetByCar(request);
             if (result == null)
             {
                 return BadRequest();

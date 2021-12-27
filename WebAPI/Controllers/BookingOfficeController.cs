@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using Models.View.BookOffices;
@@ -13,6 +14,8 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "HRM, Admin")]
+
     public class BookingOfficeController : ControllerBase
     {
         private readonly IBookingOfficeService _bookingOfficeService;

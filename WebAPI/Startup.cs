@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Models.Authentication;
 using Models.EF;
 using Models.Entities;
 using Services;
@@ -16,9 +18,11 @@ using Services.GenericRespository;
 using Services.Implement;
 using Services.Interfaces;
 using Services.Service;
+using Services.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebAPI
@@ -42,6 +46,7 @@ namespace WebAPI
             services.AddTransient<ITripService, TripService>();
             services.AddTransient<ICarService, CarService>();
             services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGenericRespository<Trip>, GenericRespository<Trip>>();
             services.AddTransient<IGenericRespository<Employee>, GenericRespository<Employee>>();
             services.AddTransient<IGenericRespository<BookingOffice>, GenericRespository<BookingOffice>>();
@@ -49,9 +54,42 @@ namespace WebAPI
             services.AddTransient<IGenericRespository<Ticket>, GenericRespository<Ticket>>();
             services.AddTransient<IGenericRespository<Car>, GenericRespository<Car>>();
             services.AddControllers();
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<CarParkDbContext>()
+                .AddDefaultTokenProviders();
+            //
+            string issuer = Configuration.GetValue<string>("JWT:ValidIssuer");
+            string signingKey = Configuration.GetValue<string>("JWT:Secret");
+            byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
+            // Adding Authentication  
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+            // Adding Jwt Bearer  
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarPark WebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication2", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
@@ -61,7 +99,9 @@ namespace WebAPI
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
-                }); c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                   {
                     {
                       new OpenApiSecurityScheme
@@ -78,32 +118,6 @@ namespace WebAPI
                         new List<string>()
                       }
                     });
-
-            });
-            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
-            string signingKey = Configuration.GetValue<string>("Tokens:Key");
-            byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
-
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = issuer,
-                    ValidateAudience = true,
-                    ValidAudience = issuer,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = System.TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
-                };
             });
         }
 

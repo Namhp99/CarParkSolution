@@ -1,4 +1,5 @@
-﻿using Models.View.Users;
+﻿using Models.Authentication;
+using Models.View.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Services.Users
 {
     public interface IUserService 
     {
-        string Login(LoginRequest request);
+        Task<string> Login(LoginModel request);
+        Task<int> RegisterHRM(RegisterModel request);
+        Task<int> RegisterAdmin(RegisterModel request);
     }
 }

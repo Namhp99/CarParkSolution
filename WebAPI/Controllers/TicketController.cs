@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using Models.View.Pagging;
@@ -13,6 +14,8 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "HRM, Admin")]
+
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
@@ -34,20 +37,20 @@ namespace WebAPI.Controllers
             }
             return Ok();
         }
-        //[HttpPut("Update")]
-        //public async Task<IActionResult> Update([FromForm] Ticket request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var result = await _ticketService.Update(request);
-        //    if (result == 0)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    return Ok();
-        //}
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromForm] TicketUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _ticketService.Update(request);
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(int Id)
         {

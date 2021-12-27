@@ -15,5 +15,6 @@ namespace Services.Interfaces
         Task<int> Update(CarUpdateRequest request);
         Task<PagedResult<Car>> GetAllRecords();       
         Task<PagedResult<Car>> Find(GetPaggingRequest request);
+        Task<Car> GetByCar(string request);
     }
 }

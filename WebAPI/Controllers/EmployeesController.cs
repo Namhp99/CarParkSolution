@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.Authentication;
 using Models.Entities;
 using Models.View.Employees;
 using Models.View.Pagging;
@@ -13,6 +15,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "HRM")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;

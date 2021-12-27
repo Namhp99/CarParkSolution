@@ -12,8 +12,6 @@ namespace Services.Interfaces
 {
     public interface ITicketService : IGenericRespository<Ticket>
     {
-        Task<int> Create(TicketCreateRequest request);
-        Task<int> Update(TicketUpdateRequest request);
         Task<PagedResult<Ticket>> GetAllRecords();
         Task<PagedResult<Ticket>> Find(GetPaggingRequest request);
 

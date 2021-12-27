@@ -19,14 +19,15 @@ namespace Services.GenericRespository
             _context = context;
         }
 
-        //public async Task<int> Create(T request)
-        //{
-        //    _context.Set<T>().Add(request);
-        //    var result = await _context.SaveChangesAsync();
-        //    return result;
-        //}
 
-        
+        public async Task<int> Create(T request)
+        {
+            _context.Set<T>().Add(request);
+            var result = await _context.SaveChangesAsync();
+            return result;
+        }
+
+
 
         public async Task<int> Delete(int id)
         {
@@ -67,13 +68,13 @@ namespace Services.GenericRespository
             return pagedResult;
         }
 
-        //public async Task<int> Update(T request)
-        //{
-        //    _context.Set<T>().Attach(request);
-        //    _context.Entry(request).State = EntityState.Modified;
-        //    var result = await _context.SaveChangesAsync();
-        //    return result;
-        //}
+        public async Task<int> Update(T request)
+        {
+            _context.Set<T>().Attach(request);
+            _context.Entry(request).State = EntityState.Modified;
+            var result = await _context.SaveChangesAsync();
+            return result;
+        }
 
     }
 

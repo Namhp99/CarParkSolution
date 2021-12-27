@@ -11,8 +11,6 @@ namespace Services.Interfaces
 {
     public interface ICarService : IGenericRespository<Car>
     {
-        Task<int> Create(CarCreateRequest request);
-        Task<int> Update(CarUpdateRequest request);
         Task<PagedResult<Car>> GetAllRecords();       
         Task<PagedResult<Car>> Find(GetPaggingRequest request);
         Task<Car> GetByCar(string request);

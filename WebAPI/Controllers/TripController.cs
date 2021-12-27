@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Trips;
@@ -19,18 +21,21 @@ namespace WebAPI.Controllers
     public class TripController : ControllerBase
     {
         private readonly ITripService _tripService;
-        public TripController(ITripService tripService)
+        private readonly IMapper _mapper;
+        public TripController(ITripService tripService, IMapper mapper)
         {
             _tripService = tripService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] TripCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] TripDTO request)
         {
+            var trip = _mapper.Map<Trip>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _tripService.Create(request);
+            var result = await _tripService.Create(trip);
             if (result == 0)
             {
                 return BadRequest();
@@ -38,13 +43,15 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] TripUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] TicketDTO request)
         {
+            var trip = _mapper.Map<Trip>(request);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _tripService.Update(request);
+            var result = await _tripService.Update(trip);
             if (result == 0)
             {
                 return BadRequest();

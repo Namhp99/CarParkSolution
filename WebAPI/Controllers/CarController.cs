@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.DTO;
 using Models.Entities;
 using Models.View.Cars;
 using Models.View.Pagging;
@@ -14,37 +16,41 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "HRM, Admin")]
+    //[Authorize(Roles = "HRM, Admin")]
 
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;
-        public CarController(ICarService carService)
+        private readonly IMapper _mapper;
+        public CarController(ICarService carService, IMapper mapper)
         {
             _carService = carService;
+            _mapper = mapper;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] CarCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] CarDTO request)
         {
+            var car = _mapper.Map<Car>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _carService.Create(request);
+            var result = await _carService.Create(car);
             if (result == 0)
             {
                 return BadRequest();
             }
             return Ok();
-        }
+        }      
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] CarUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] CarDTO request)
         {
+            var car = _mapper.Map<Car>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _carService.Update(request);
+            var result = await _carService.Update(car);
             if (result == 0)
             {
                 return BadRequest();
@@ -73,7 +79,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok(result);
+            var car = _mapper.Map<IEnumerable<CarDTO>>(result);
+            return Ok(car);
         }
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetByCar(string request)
@@ -83,7 +90,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok(result);
+            var car = _mapper.Map<CarDTO>(result);
+            return Ok(car);
         }
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)

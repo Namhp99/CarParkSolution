@@ -22,18 +22,18 @@ namespace Services.Service
         {
         }
 
-        public async Task<int> Create(TripCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TripCreateRequest, Trip>();
-            });
-            var mapper = config.CreateMapper();
-            Trip trip = mapper.Map<Trip>(request);
-            _context.Trips.Add(trip);
-            await _context.SaveChangesAsync();
-            return trip.TripId;
-        }
+        //public async Task<int> Create(TripCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<TripCreateRequest, Trip>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    Trip trip = mapper.Map<Trip>(request);
+        //    _context.Trips.Add(trip);
+        //    await _context.SaveChangesAsync();
+        //    return trip.TripId;
+        //}
 
         public async Task<PagedResult<Trip>> Find(GetPaggingRequest request)
         {
@@ -112,18 +112,18 @@ namespace Services.Service
             return pagedResult;
         }
 
-        public async Task<int> Update(TripUpdateRequest request)
-        {
-            var trip = await _context.Trips.FindAsync(request.TripId);
-            if (trip == null) return -1;
-            trip.CarType = request.CarType;
-            trip.DepartureDate = request.DepartureDate;
-            trip.DepartureTime = request.DepartureTime;
-            trip.BookerTicketNumber = request.BookerTicketNumber;
-            trip.Destination = request.Destination;
-            trip.Driver = request.Driver;
-            trip.MaximumOnlineTickerNumber = request.MaximumOnlineTickerNumber;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(TripUpdateRequest request)
+        //{
+        //    var trip = await _context.Trips.FindAsync(request.TripId);
+        //    if (trip == null) return -1;
+        //    trip.CarType = request.CarType;
+        //    trip.DepartureDate = request.DepartureDate;
+        //    trip.DepartureTime = request.DepartureTime;
+        //    trip.BookerTicketNumber = request.BookerTicketNumber;
+        //    trip.Destination = request.Destination;
+        //    trip.Driver = request.Driver;
+        //    trip.MaximumOnlineTickerNumber = request.MaximumOnlineTickerNumber;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

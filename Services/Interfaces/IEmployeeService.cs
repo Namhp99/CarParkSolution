@@ -11,8 +11,6 @@ namespace Services.Interfaces
 {
     public interface IEmployeeService : IGenericRespository<Employee>
     {
-        Task<int> Create(EmployeeCreateRequest request);
-        Task<int> Update(EmployeeUpdateRequest request);
         Task<PagedResult<Employee>> Find(GetPaggingRequest request);
 
     }

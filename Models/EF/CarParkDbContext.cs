@@ -33,10 +33,10 @@ namespace Models.EF
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = CarParkDB;");
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = CarParkDB;");
+        }
         public DbSet<Car> Cars { get; set; }
         public DbSet<BookingOffice> BookingOffices { get; set; }
         public DbSet<Employee> Employees { get; set; }

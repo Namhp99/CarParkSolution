@@ -11,8 +11,6 @@ namespace Services.Interfaces
 {
     public interface ITripService : IGenericRespository<Trip>
     {
-        Task<int> Create(TripCreateRequest request);
-        Task<int> Update(TripUpdateRequest request);
         Task<PagedResult<Trip>> GetAllRecords();
         Task<PagedResult<Trip>> Find(GetPaggingRequest request);
 

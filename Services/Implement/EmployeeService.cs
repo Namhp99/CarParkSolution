@@ -22,18 +22,18 @@ namespace Services.Service
         {
         }
 
-        public async Task<int> Create(EmployeeCreateRequest request)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<EmployeeCreateRequest, Employee>();
-            });
-            var mapper = config.CreateMapper();
-            Employee employee = mapper.Map<Employee>(request);
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-            return employee.EmployeeId;
-        }
+        //public async Task<int> Create(EmployeeCreateRequest request)
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<EmployeeCreateRequest, Employee>();
+        //    });
+        //    var mapper = config.CreateMapper();
+        //    Employee employee = mapper.Map<Employee>(request);
+        //    _context.Employees.Add(employee);
+        //    await _context.SaveChangesAsync();
+        //    return employee.EmployeeId;
+        //}
 
         public async Task<PagedResult<Employee>> Find(GetPaggingRequest request)
         {
@@ -90,20 +90,20 @@ namespace Services.Service
             return pagedResult;
         }
 
-        public async Task<int> Update(EmployeeUpdateRequest request)
-        {
-            var employee = await _context.Employees.FindAsync(request.EmployeeId);
-            if (employee == null) return -1;
-            employee.Account = request.Account;
-            employee.Password = request.Password;
-            employee.EmployeeName = request.EmployeeName;
-            employee.EmployeeEmail = request.EmployeeEmail;
-            employee.EmployeeBirthdate = request.EmployeeBirthdate;
-            employee.Department = request.Department;
-            employee.EmployeePhone = request.EmployeePhone;
-            employee.Sex = request.Sex;
-            employee.EmployeeAddress = request.EmployeeAddress;
-            return await _context.SaveChangesAsync();
-        }
+        //public async Task<int> Update(EmployeeUpdateRequest request)
+        //{
+        //    var employee = await _context.Employees.FindAsync(request.EmployeeId);
+        //    if (employee == null) return -1;
+        //    employee.Account = request.Account;
+        //    employee.Password = request.Password;
+        //    employee.EmployeeName = request.EmployeeName;
+        //    employee.EmployeeEmail = request.EmployeeEmail;
+        //    employee.EmployeeBirthdate = request.EmployeeBirthdate;
+        //    employee.Department = request.Department;
+        //    employee.EmployeePhone = request.EmployeePhone;
+        //    employee.Sex = request.Sex;
+        //    employee.EmployeeAddress = request.EmployeeAddress;
+        //    return await _context.SaveChangesAsync();
+        //}
     }
 }

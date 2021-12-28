@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Services.GenericRespository
 {
-    public class GenericRespository<T> : IGenericRespository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly CarParkDbContext _context;
-        public GenericRespository( CarParkDbContext context)
+        public GenericRepository( CarParkDbContext context)
         {
             _context = context;
         }

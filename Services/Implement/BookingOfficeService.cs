@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Services.Implement
 {
-    public class BookingOfficeService : GenericRespository<BookingOffice>, IBookingOfficeService
+    public class BookingOfficeService : GenericRepository<BookingOffice>, IBookingOfficeService
     {
 
         public BookingOfficeService(CarParkDbContext context)

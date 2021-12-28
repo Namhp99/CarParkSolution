@@ -7,6 +7,7 @@ using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Parkinglots;
 using Services.Interfaces;
+using Services.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,14 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "HRM, Admin")]
+    //[Authorize(Roles = "HRM, Admin")]
     public class ParkinglotController : ControllerBase
     {
-        private readonly IParkinglotService _parkinglotService;
         private readonly IMapper _mapper;
-        public ParkinglotController(IParkinglotService parkinglotService, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public ParkinglotController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _parkinglotService = parkinglotService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         [HttpPost("Create")]
@@ -34,7 +35,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _parkinglotService.Create(parkinglot);
+            var result = await _unitOfWork.Parkinglots.Create(parkinglot);
             if (result == 0)
             {
                 return BadRequest();
@@ -50,7 +51,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _parkinglotService.Update(parkinglot);
+            var result = await _unitOfWork.Parkinglots.Update(parkinglot);
             if (result == 0)
             {
                 return BadRequest();
@@ -64,7 +65,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _parkinglotService.Delete(Id);
+            var result = await _unitOfWork.Parkinglots.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -74,7 +75,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _parkinglotService.GetAll();
+            var result = await _unitOfWork.Parkinglots.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -84,7 +85,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _parkinglotService.GetById(Id);
+            var result = await _unitOfWork.Parkinglots.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -94,7 +95,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _parkinglotService.GetPaging(request);
+            var result = await _unitOfWork.Parkinglots.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
@@ -104,7 +105,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllRecords")]
         public async Task<IActionResult> GetAllRecords()
         {
-            var result = await _parkinglotService.GetAllRecords();
+            var result = await _unitOfWork.Parkinglots.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -114,7 +115,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _parkinglotService.Find(request);
+            var result = await _unitOfWork.Parkinglots.Find(request);
             if (result == null)
             {
                 return BadRequest();

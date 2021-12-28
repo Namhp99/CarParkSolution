@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IEmployeeService : IGenericRespository<Employee>
+    public interface IEmployeeService : IGenericRepository<Employee>
     {
         Task<PagedResult<Employee>> Find(GetPaggingRequest request);
 

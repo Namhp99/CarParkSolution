@@ -7,6 +7,7 @@ using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Trips;
 using Services.Interfaces;
+using Services.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,15 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "HRM, Admin")]
+  //  [Authorize(Roles = "HRM, Admin")]
 
     public class TripController : ControllerBase
     {
-        private readonly ITripService _tripService;
         private readonly IMapper _mapper;
-        public TripController(ITripService tripService, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public TripController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _tripService = tripService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         [HttpPost("Create")]
@@ -35,7 +36,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _tripService.Create(trip);
+            var result = await _unitOfWork.Trips.Create(trip);
             if (result == 0)
             {
                 return BadRequest();
@@ -51,7 +52,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _tripService.Update(trip);
+            var result = await _unitOfWork.Trips.Update(trip);
             if (result == 0)
             {
                 return BadRequest();
@@ -65,7 +66,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _tripService.Delete(Id);
+            var result = await _unitOfWork.Trips.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -75,7 +76,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _tripService.GetAll();
+            var result = await _unitOfWork.Trips.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -85,7 +86,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _tripService.GetById(Id);
+            var result = await _unitOfWork.Trips.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -95,7 +96,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _tripService.GetPaging(request);
+            var result = await _unitOfWork.Trips.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
@@ -105,7 +106,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllRecords")]
         public async Task<IActionResult> GetAllRecords()
         {
-            var result = await _tripService.GetAllRecords();
+            var result = await _unitOfWork.Trips.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -115,7 +116,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _tripService.Find(request);
+            var result = await _unitOfWork.Trips.Find(request);
             if (result == null)
             {
                 return BadRequest();

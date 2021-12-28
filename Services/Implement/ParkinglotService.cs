@@ -14,7 +14,7 @@ using AutoMapper;
 
 namespace Services.Implement
 {
-    public class ParkinglotService : GenericRespository<Parkinglot>, IParkinglotService
+    public class ParkinglotService : GenericRepository<Parkinglot>, IParkinglotService
     {
 
         public ParkinglotService(CarParkDbContext context)

@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
-    public class TicketService : GenericRespository<Ticket>, ITicketService
+    public class TicketService : GenericRepository<Ticket>, ITicketService
     {
 
         public TicketService(CarParkDbContext context)

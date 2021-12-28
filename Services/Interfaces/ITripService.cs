@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface ITripService : IGenericRespository<Trip>
+    public interface ITripService : IGenericRepository<Trip>
     {
         Task<PagedResult<Trip>> GetAllRecords();
         Task<PagedResult<Trip>> Find(GetPaggingRequest request);

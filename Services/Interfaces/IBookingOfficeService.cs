@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IBookingOfficeService : IGenericRespository<BookingOffice>
+    public interface IBookingOfficeService : IGenericRepository<BookingOffice>
     {
         Task<PagedResult<BookingOffice>> GetAllRecords();
         Task<PagedResult<BookingOffice>> Find(GetPaggingRequest request);

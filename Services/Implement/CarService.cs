@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Services.Implement
 {
-    public class CarService : GenericRespository<Car>, ICarService
+    public class CarService : GenericRepository<Car>, ICarService
     {
 
         public CarService(CarParkDbContext context)

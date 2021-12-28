@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IParkinglotService : IGenericRespository<Parkinglot>
+    public interface IParkinglotService : IGenericRepository<Parkinglot>
     {
         Task<PagedResult<Parkinglot>> GetAllRecords();
         Task<PagedResult<Parkinglot>> Find(GetPaggingRequest request);

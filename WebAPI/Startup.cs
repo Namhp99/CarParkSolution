@@ -19,6 +19,7 @@ using Services.GenericRespository;
 using Services.Implement;
 using Services.Interfaces;
 using Services.Service;
+using Services.UnitofWork;
 using Services.Users;
 using System;
 using System.Collections.Generic;
@@ -48,12 +49,15 @@ namespace WebAPI
             services.AddTransient<ICarService, CarService>();
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IGenericRespository<Trip>, GenericRespository<Trip>>();
-            services.AddTransient<IGenericRespository<Employee>, GenericRespository<Employee>>();
-            services.AddTransient<IGenericRespository<BookingOffice>, GenericRespository<BookingOffice>>();
-            services.AddTransient<IGenericRespository<Parkinglot>, GenericRespository<Parkinglot>>();
-            services.AddTransient<IGenericRespository<Ticket>, GenericRespository<Ticket>>();
-            services.AddTransient<IGenericRespository<Car>, GenericRespository<Car>>();
+            services.AddTransient<IGenericRepository<Trip>, GenericRepository<Trip>>();
+            services.AddTransient<IGenericRepository<Employee>, GenericRepository<Employee>>();
+            services.AddTransient<IGenericRepository<BookingOffice>, GenericRepository<BookingOffice>>();
+            services.AddTransient<IGenericRepository<Parkinglot>, GenericRepository<Parkinglot>>();
+            services.AddTransient<IGenericRepository<Ticket>, GenericRepository<Ticket>>();
+            services.AddTransient<IGenericRepository<Car>, GenericRepository<Car>>();
+            //
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            //
             services.AddControllers();
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

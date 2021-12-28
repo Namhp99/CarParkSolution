@@ -14,7 +14,7 @@ using AutoMapper;
 
 namespace Services.Service
 {
-    public class EmployeeService : GenericRespository<Employee>, IEmployeeService
+    public class EmployeeService : GenericRepository<Employee>, IEmployeeService
     {
 
         public EmployeeService(CarParkDbContext context)

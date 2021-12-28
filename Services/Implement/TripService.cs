@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Services.Service
 {
-    public class TripService : GenericRespository<Trip>, ITripService
+    public class TripService : GenericRepository<Trip>, ITripService
     {
 
         public TripService(CarParkDbContext context)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface ITicketService : IGenericRespository<Ticket>
+    public interface ITicketService : IGenericRepository<Ticket>
     {
         Task<PagedResult<Ticket>> GetAllRecords();
         Task<PagedResult<Ticket>> Find(GetPaggingRequest request);

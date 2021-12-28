@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface ICarService : IGenericRespository<Car>
+    public interface ICarService : IGenericRepository<Car>
     {
         Task<PagedResult<Car>> GetAllRecords();       
         Task<PagedResult<Car>> Find(GetPaggingRequest request);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.GenericRespository
 {
-    public interface IGenericRespository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         Task<int> Create(T request);
         Task<int> Update(T request);

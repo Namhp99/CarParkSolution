@@ -2,8 +2,6 @@
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Parkinglots;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,13 +9,15 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services.Implement
+namespace Models.Repository.Implement
 {
-    public class ParkinglotService : GenericRepository<Parkinglot>, IParkinglotService
+    public class ParkinglotRepository : GenericRepository<Parkinglot>, IParkinglotRepository
     {
 
-        public ParkinglotService(CarParkDbContext context)
+        public ParkinglotRepository(CarParkDbContext context)
             : base(context)
         {
         }

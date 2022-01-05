@@ -1,15 +1,15 @@
 ﻿using Models.Entities;
+using Models.GenericRepository;
 using Models.View.Employees;
 using Models.View.Pagging;
-using Services.GenericRespository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interfaces
+namespace Models.Repository.Interfaces
 {
-    public interface IEmployeeService : IGenericRepository<Employee>
+    public interface IEmployeeRepository : IGenericRepository<Employee>
     {
         Task<PagedResult<Employee>> Find(GetPaggingRequest request);
 

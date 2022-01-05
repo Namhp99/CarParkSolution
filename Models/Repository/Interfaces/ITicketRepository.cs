@@ -1,16 +1,16 @@
 ﻿using Models.Entities;
+using Models.GenericRepository;
 using Models.View.Pagging;
 using Models.View.Tickets;
 using Models.View.Trips;
-using Services.GenericRespository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interfaces
+namespace Models.Repository.Interfaces
 {
-    public interface ITicketService : IGenericRepository<Ticket>
+    public interface ITicketRepository : IGenericRepository<Ticket>
     {
         Task<PagedResult<Ticket>> GetAllRecords();
         Task<PagedResult<Ticket>> Find(GetPaggingRequest request);

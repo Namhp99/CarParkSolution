@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Models.Authentication;
 using Models.DTO;
 using Models.Entities;
+using Models.UnitofWorks;
 using Models.View.Employees;
 using Models.View.Pagging;
-using Services.Interfaces;
-using Services.UnitofWork;
+using Services.InterfaceService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +21,11 @@ namespace WebAPI.Controllers
     //[Authorize(Roles = "HRM")]
     public class EmployeesController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
-        public EmployeesController(IUnitOfWork unitOfWork, IMapper mapper)
+        public EmployeesController(IEmployeeService employeeService, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _employeeService = employeeService;
             _mapper = mapper;
         }
         [HttpPost("Create")]
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Employees.Create(employee);
+            var result = await _employeeService.Create(employee);
             if (result == 0)
             {
                 return BadRequest();
@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Employees.Update(employee);
+            var result = await _employeeService.Update(employee);
             if (result == 0)
             {
                 return BadRequest();
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Employees.Delete(Id);
+            var result = await _employeeService.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _unitOfWork.Employees.GetAll();
+            var result = await _employeeService.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _unitOfWork.Employees.GetById(Id);
+            var result = await _employeeService.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -95,22 +95,22 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.Employees.GetPaging(request);
+            var result = await _employeeService.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
             }
             return Ok(result);
         }
-        [HttpPost("Find")]
-        public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
-        {
-            var result = await _unitOfWork.Employees.Find(request);
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
-        }
+        //[HttpPost("Find")]
+        //public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
+        //{
+        //    var result = await _employeeService.Find(request);
+        //    if (result == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Ok(result);
+        //}
     }
 }

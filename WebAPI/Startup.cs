@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,12 +15,14 @@ using Models.Authentication;
 using Models.DTO;
 using Models.EF;
 using Models.Entities;
+using Models.GenericRepository;
+using Models.GenericRespository;
+using Models.Repository.Implement;
+using Models.Repository.Interfaces;
+using Models.UnitofWorks;
 using Services;
-using Services.GenericRespository;
-using Services.Implement;
-using Services.Interfaces;
-using Services.Service;
-using Services.UnitofWork;
+using Services.ImplementService;
+using Services.InterfaceService;
 using Services.Users;
 using System;
 using System.Collections.Generic;
@@ -41,13 +44,15 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CarParkDbContext>(options => options.UseSqlServer(Configuration.GetValue<string>("ConnectionStrings:CarParkDb")));
+            /////
             services.AddDbContext<CarParkDbContext>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient<IBookingOfficeService, BookingOfficeService>();
-            services.AddTransient<IParkinglotService, ParkinglotService>();
-            services.AddTransient<ITripService, TripService>();
-            services.AddTransient<ICarService, CarService>();
-            services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IBookingOfficeRepository, BookingOfficeRepository>();
+            services.AddTransient<IParkinglotRepository, ParkinglotRepository>();
+            services.AddTransient<ITripRepository, TripRepository>();
+            services.AddTransient<ICarRepository, CarRepository>();
+            services.AddTransient<ITicketRepository, TicketRepository>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGenericRepository<Trip>, GenericRepository<Trip>>();
             services.AddTransient<IGenericRepository<Employee>, GenericRepository<Employee>>();
@@ -58,6 +63,9 @@ namespace WebAPI
             //
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             //
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            //
+
             services.AddControllers();
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

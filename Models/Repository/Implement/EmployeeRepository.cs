@@ -2,8 +2,6 @@
 using Models.Entities;
 using Models.View.Employees;
 using Models.View.Pagging;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,13 +9,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services.Service
+namespace Models.Repository.Implement
 {
-    public class EmployeeService : GenericRepository<Employee>, IEmployeeService
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
 
-        public EmployeeService(CarParkDbContext context)
+        public EmployeeRepository(CarParkDbContext context)
             : base(context)
         {
         }

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.GenericRespository
+namespace Models.GenericRepository
 {
     public interface IGenericRepository<T> where T : class
     {

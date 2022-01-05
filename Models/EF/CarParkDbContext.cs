@@ -35,7 +35,7 @@ namespace Models.EF
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = CarParkDB;");
+            //optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog = CarParkDB;");
         }
         public DbSet<Car> Cars { get; set; }
         public DbSet<BookingOffice> BookingOffices { get; set; }

@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Trips;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services.Service
+namespace Models.Repository.Implement
 {
-    public class TripService : GenericRepository<Trip>, ITripService
+    public class TripRepository : GenericRepository<Trip>, ITripRepository
     {
 
-        public TripService(CarParkDbContext context)
+        public TripRepository(CarParkDbContext context)
             : base(context)
         {
         }

@@ -3,21 +3,21 @@ using Models.EF;
 using Models.Entities;
 using Models.View.Pagging;
 using Models.View.Tickets;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services
+namespace Models.Repository.Implement
 {
-    public class TicketService : GenericRepository<Ticket>, ITicketService
+    public class TicketRepository : GenericRepository<Ticket>, ITicketRepository
     {
 
-        public TicketService(CarParkDbContext context)
+        public TicketRepository(CarParkDbContext context)
             : base(context)
         {
         }

@@ -3,21 +3,21 @@ using Models.EF;
 using Models.Entities;
 using Models.View.BookOffices;
 using Models.View.Pagging;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services.Implement
+namespace Models.Repository.Implement
 {
-    public class BookingOfficeService : GenericRepository<BookingOffice>, IBookingOfficeService
+    public class BookingOfficeRepository : GenericRepository<BookingOffice>, IBookingOfficeRepository
     {
 
-        public BookingOfficeService(CarParkDbContext context)
+        public BookingOfficeRepository(CarParkDbContext context)
             : base(context)
         {
         }

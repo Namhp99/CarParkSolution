@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.EF;
 using Models.Entities;
+using Models.GenericRepository;
 using Models.View.Pagging;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.GenericRespository
+namespace Models.GenericRespository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -42,6 +43,7 @@ namespace Services.GenericRespository
             return await _context.Set<T>()
                 .ToListAsync();
         }
+
 
         public async Task<T> GetById(int id)
         {

@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTO;
 using Models.Entities;
+using Models.UnitofWorks;
 using Models.View.Cars;
 using Models.View.Pagging;
-using Services.Interfaces;
-using Services.UnitofWork;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

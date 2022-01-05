@@ -3,21 +3,21 @@ using Models.EF;
 using Models.Entities;
 using Models.View.Cars;
 using Models.View.Pagging;
-using Services.GenericRespository;
-using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Models.GenericRespository;
+using Models.Repository.Interfaces;
 
-namespace Services.Implement
+namespace Models.Repository.Implement
 {
-    public class CarService : GenericRepository<Car>, ICarService
+    public class CarRepository : GenericRepository<Car>, ICarRepository
     {
 
-        public CarService(CarParkDbContext context)
+        public CarRepository(CarParkDbContext context)
             : base(context)
         {
         }

@@ -13,7 +13,9 @@ namespace Services.InterfaceService
         Task<int> Update(Car request);
         Task<int> Delete(int id);
         Task<IEnumerable<Car>> GetAll();
-        Task<Car> GetById(int id);
         Task<PagedResult<Car>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<Car>> GetAllRecords();
+        Task<PagedResult<Car>> Find(GetPaggingRequest request);
+        Task<Car> GetByCar(string request);
     }
 }

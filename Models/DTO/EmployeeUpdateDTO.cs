@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Models.DTO
 {
-    public class EmployeeDTO
-    {
-        //public int EmployeeId { get; set; }
+    public class EmployeeUpdateDTO
+    {        
+        public int EmployeeId { get; set; }
         public string Account { get; set; }
         public string Password { get; set; }
         public string Department { get; set; }

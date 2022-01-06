@@ -15,5 +15,7 @@ namespace Services.InterfaceService
         Task<IEnumerable<Parkinglot>> GetAll();
         Task<Parkinglot> GetById(int id);
         Task<PagedResult<Parkinglot>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<Parkinglot>> GetAllRecords();
+        Task<PagedResult<Parkinglot>> Find(GetPaggingRequest request);
     }
 }

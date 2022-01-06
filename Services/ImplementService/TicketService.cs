@@ -31,9 +31,19 @@ namespace Services.ImplementService
             return await _tickeRepository.Delete(id);
         }
 
+        public async Task<PagedResult<Ticket>> Find(GetPaggingRequest request)
+        {
+            return await _tickeRepository.Find(request);
+        }
+
         public async Task<IEnumerable<Ticket>> GetAll()
         {
             return await _tickeRepository.GetAll();
+        }
+
+        public async Task<PagedResult<Ticket>> GetAllRecords()
+        {
+            return await _tickeRepository.GetAllRecords();
         }
 
         public async Task<Ticket> GetById(int id)

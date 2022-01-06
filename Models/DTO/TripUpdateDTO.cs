@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Models.DTO
 {
-    public class TripDTO
-    {
-        //public int TripId { get; set; }
+    public class TripUpdateDTO
+    {        
+        public int TripId { get; set; }
         public int BookerTicketNumber { get; set; }
         public string CarType { get; set; }
         public DateTime DepartureDate { get; set; }

@@ -21,6 +21,18 @@ namespace Models.DTO
                 .ReverseMap();
             CreateMap<Trip, TripDTO>()
                 .ReverseMap();
+            CreateMap<Car, CarUpdateDTO>()
+                .ReverseMap();
+            CreateMap<BookingOffice, BookingOfficeUpdateDTO>()
+                .ReverseMap();
+            CreateMap<Employee, EmployeeUpdateDTO>()
+                .ReverseMap();
+            CreateMap<Parkinglot, ParkinglotUpdateDTO>()
+                .ReverseMap();
+            CreateMap<Ticket, TicketUpdateDTO>()
+                .ReverseMap();
+            CreateMap<Trip, TripUpdateDTO>()
+                .ReverseMap();
         }
     }
 }

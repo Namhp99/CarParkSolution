@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] EmployeeDTO request)
+        public async Task<IActionResult> Update([FromForm] EmployeeUpdateDTO request)
         {
             var employee = _mapper.Map<Employee>(request);
             if (!ModelState.IsValid)
@@ -102,15 +102,15 @@ namespace WebAPI.Controllers
             }
             return Ok(result);
         }
-        //[HttpPost("Find")]
-        //public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
-        //{
-        //    var result = await _employeeService.Find(request);
-        //    if (result == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    return Ok(result);
-        //}
+        [HttpPost("Find")]
+        public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
+        {
+            var result = await _employeeService.Find(request);
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
     }
 }

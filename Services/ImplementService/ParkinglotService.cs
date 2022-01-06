@@ -31,9 +31,19 @@ namespace Services.ImplementService
             return await _parkinglotRepository.Delete(id);
         }
 
+        public async Task<PagedResult<Parkinglot>> Find(GetPaggingRequest request)
+        {
+            return await _parkinglotRepository.Find(request);
+        }
+
         public async Task<IEnumerable<Parkinglot>> GetAll()
         {
             return await _parkinglotRepository.GetAll();
+        }
+
+        public async Task<PagedResult<Parkinglot>> GetAllRecords()
+        {
+            return await _parkinglotRepository.GetAllRecords();
         }
 
         public async Task<Parkinglot> GetById(int id)

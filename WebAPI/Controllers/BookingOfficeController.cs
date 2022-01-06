@@ -7,7 +7,7 @@ using Models.Entities;
 using Models.UnitofWorks;
 using Models.View.BookOffices;
 using Models.View.Pagging;
-
+using Services.InterfaceService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +22,14 @@ namespace WebAPI.Controllers
     public class BookingOfficeController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-        public BookingOfficeController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IBookingOfficeService _bookingOfficeService;
+
+        public BookingOfficeController(IMapper mapper, IBookingOfficeService bookingOfficeService)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _bookingOfficeService = bookingOfficeService;
         }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromForm] BookingOfficeDTO request)
         {
@@ -37,7 +39,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.BookingOffices.Create(bookingOffice);
+            var result = await _bookingOfficeService.Create(bookingOffice);
             if (result == 0)
             {
                 return BadRequest();
@@ -45,14 +47,14 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] BookingOfficeDTO request)
+        public async Task<IActionResult> Update([FromForm] BookingOfficeUpdateDTO request)
         {
             var bookingOffice = _mapper.Map<BookingOffice>(request);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.BookingOffices.Update(bookingOffice);
+            var result = await _bookingOfficeService.Update(bookingOffice);
             if (result == 0)
             {
                 return BadRequest();
@@ -66,7 +68,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.BookingOffices.Delete(Id);
+            var result = await _bookingOfficeService.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -76,7 +78,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _unitOfWork.BookingOffices.GetAll();
+            var result = await _bookingOfficeService.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -86,7 +88,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _unitOfWork.BookingOffices.GetById(Id);
+            var result = await _bookingOfficeService.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -96,7 +98,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.BookingOffices.GetPaging(request);
+            var result = await _bookingOfficeService.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
@@ -106,7 +108,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllRecords")]
         public async Task<IActionResult> GetAllRecords()
         {
-            var result = await _unitOfWork.BookingOffices.GetAllRecords();
+            var result = await _bookingOfficeService.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -116,7 +118,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.BookingOffices.Find(request);
+            var result = await _bookingOfficeService.Find(request);
             if (result == null)
             {
                 return BadRequest();

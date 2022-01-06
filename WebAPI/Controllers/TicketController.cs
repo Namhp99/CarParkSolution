@@ -7,7 +7,7 @@ using Models.Entities;
 using Models.UnitofWorks;
 using Models.View.Pagging;
 using Models.View.Tickets;
-
+using Services.InterfaceService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +22,14 @@ namespace WebAPI.Controllers
     public class TicketController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-        public TicketController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ITicketService _ticketService;
+
+        public TicketController(IMapper mapper, ITicketService ticketService)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _ticketService = ticketService;
         }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromForm] TicketDTO request)
         {
@@ -36,7 +38,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Tickets.Create(ticket);
+            var result = await _ticketService.Create(ticket);
             if (result == 0)
             {
                 return BadRequest();
@@ -44,7 +46,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] TicketDTO request)
+        public async Task<IActionResult> Update([FromForm] TicketUpdateDTO request)
         {
             var ticket = _mapper.Map<Ticket>(request);
 
@@ -52,7 +54,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Tickets.Update(ticket);
+            var result = await _ticketService.Update(ticket);
             if (result == 0)
             {
                 return BadRequest();
@@ -66,7 +68,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Tickets.Delete(Id);
+            var result = await _ticketService.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -76,7 +78,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _unitOfWork.Tickets.GetAll();
+            var result = await _ticketService.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -86,7 +88,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _unitOfWork.Tickets.GetById(Id);
+            var result = await _ticketService.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -96,7 +98,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.Tickets.GetPaging(request);
+            var result = await _ticketService.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
@@ -106,7 +108,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllRecords")]
         public async Task<IActionResult> GetAllRecords()
         {
-            var result = await _unitOfWork.Tickets.GetAllRecords();
+            var result = await _ticketService.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -116,7 +118,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.Tickets.Find(request);
+            var result = await _ticketService.Find(request);
             if (result == null)
             {
                 return BadRequest();

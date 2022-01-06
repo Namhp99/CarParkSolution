@@ -15,5 +15,7 @@ namespace Services.InterfaceService
         Task<IEnumerable<Employee>> GetAll();
         Task<Employee> GetById(int id);
         Task<PagedResult<Employee>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<Employee>> Find(GetPaggingRequest request);
+
     }
 }

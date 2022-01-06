@@ -14,6 +14,8 @@ namespace Services.InterfaceService
         Task<int> Delete(int id);
         Task<IEnumerable<BookingOffice>> GetAll();
         Task<BookingOffice> GetById(int id);
-        Task<PagedResult<Car>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<BookingOffice>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<BookingOffice>> GetAllRecords();
+        Task<PagedResult<BookingOffice>> Find(GetPaggingRequest request);
     }
 }

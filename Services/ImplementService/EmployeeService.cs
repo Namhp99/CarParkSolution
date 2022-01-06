@@ -31,6 +31,11 @@ namespace Services.ImplementService
             return await _employeeRepository.Delete(id);
         }
 
+        public async Task<PagedResult<Employee>> Find(GetPaggingRequest request)
+        {
+            return await _employeeRepository.Find(request);
+        }
+
         public async Task<IEnumerable<Employee>> GetAll()
         {
             return await _employeeRepository.GetAll();

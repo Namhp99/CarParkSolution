@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Models.DTO
 {
-    public class BookingOfficeDTO
-    {
-        //public int OfficeId { get; set; }
+    public class BookingOfficeUpdateDTO
+    {        
+        public int OfficeId { get; set; }
         public DateTime EndContractDeadline { get; set; }
         public DateTime StartContractDeadline { get; set; }
         public string OfficeName { get; set; }

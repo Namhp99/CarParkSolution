@@ -7,6 +7,7 @@ using Models.Entities;
 using Models.UnitofWorks;
 using Models.View.Pagging;
 using Models.View.Parkinglots;
+using Services.InterfaceService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,14 @@ namespace WebAPI.Controllers
     public class ParkinglotController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-        public ParkinglotController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IParkinglotService _parkinglotService;
+
+        public ParkinglotController(IMapper mapper, IParkinglotService parkinglotService)
         {
-            _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _parkinglotService = parkinglotService;
         }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromForm] ParkinglotDTO request)
         {
@@ -34,7 +37,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Parkinglots.Create(parkinglot);
+            var result = await _parkinglotService.Create(parkinglot);
             if (result == 0)
             {
                 return BadRequest();
@@ -42,7 +45,7 @@ namespace WebAPI.Controllers
             return Ok();
         }
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] ParkinglotDTO request)
+        public async Task<IActionResult> Update([FromForm] ParkinglotUpdateDTO request)
         {
             var parkinglot = _mapper.Map<Parkinglot>(request);
 
@@ -50,7 +53,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Parkinglots.Update(parkinglot);
+            var result = await _parkinglotService.Update(parkinglot);
             if (result == 0)
             {
                 return BadRequest();
@@ -64,7 +67,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _unitOfWork.Parkinglots.Delete(Id);
+            var result = await _parkinglotService.Delete(Id);
             if (result == 0)
             {
                 return BadRequest();
@@ -74,7 +77,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _unitOfWork.Parkinglots.GetAll();
+            var result = await _parkinglotService.GetAll();
             if (result == null)
             {
                 return BadRequest();
@@ -84,7 +87,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetInfo")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var result = await _unitOfWork.Parkinglots.GetById(Id);
+            var result = await _parkinglotService.GetById(Id);
             if (result == null)
             {
                 return BadRequest();
@@ -94,7 +97,7 @@ namespace WebAPI.Controllers
         [HttpPost("GetPagging")]
         public async Task<IActionResult> GetPagging([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.Parkinglots.GetPaging(request);
+            var result = await _parkinglotService.GetPaging(request);
             if (result == null)
             {
                 return BadRequest();
@@ -104,7 +107,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllRecords")]
         public async Task<IActionResult> GetAllRecords()
         {
-            var result = await _unitOfWork.Parkinglots.GetAllRecords();
+            var result = await _parkinglotService.GetAllRecords();
             if (result == null)
             {
                 return BadRequest();
@@ -114,7 +117,7 @@ namespace WebAPI.Controllers
         [HttpPost("Find")]
         public async Task<IActionResult> Find([FromForm] GetPaggingRequest request)
         {
-            var result = await _unitOfWork.Parkinglots.Find(request);
+            var result = await _parkinglotService.Find(request);
             if (result == null)
             {
                 return BadRequest();

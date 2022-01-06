@@ -15,5 +15,7 @@ namespace Services.InterfaceService
         Task<IEnumerable<Trip>> GetAll();
         Task<Trip> GetById(int id);
         Task<PagedResult<Trip>> GetPaging(GetPaggingRequest request);
+        Task<PagedResult<Trip>> GetAllRecords();
+        Task<PagedResult<Trip>> Find(GetPaggingRequest request);
     }
 }

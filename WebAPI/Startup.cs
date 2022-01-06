@@ -64,6 +64,11 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             //
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IParkinglotService, ParkinglotService>();
+            services.AddTransient<ICarService, CarService>();
+            services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<ITripService, TripService>();
+            services.AddTransient<IBookingOfficeService, BookingOfficeService>();
             //
 
             services.AddControllers();
